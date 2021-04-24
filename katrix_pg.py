@@ -9,6 +9,8 @@ import sys
 app = Flask(__name__)
 
 def send_request(pushkey):
+    if not pushkey.startswith("https://push.kaiostech.com:8443/wpush"):
+        return False
     now = int(datetime.utcnow().timestamp())
     try:
         response = requests.put(pushkey, data=dict(version=now))
