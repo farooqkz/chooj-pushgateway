@@ -2,18 +2,16 @@ from flask import Flask # <3?
 from flask import request
 from flask import abort
 from flask import g
-from datetime import datetime
 import requests
 import sys
 
 app = Flask(__name__)
 
-def send_request(pushkey):
+def send_request(pushkey, data=None):
     if not pushkey.startswith("https://push.kaiostech.com:8443/wpush"):
         return False
-    now = int(datetime.utcnow().timestamp())
     try:
-        response = requests.put(pushkey, data=dict(version=now))
+        response = requests.post(pushkey, data=data)
     except:
         return False
     if not response.ok:
@@ -28,5 +26,5 @@ def notify():
         lambda device: device["pushkey"],
         request.json["notification"]["devices"]
     )
-    rejected = list(filter(None, map(send_request, pushkeys)))
-    return {"rejected": rejected}
+    rejected = filter(None, map(send_request, zip(pushkeys, request.json))
+    return {"rejected": list(rejected)}
