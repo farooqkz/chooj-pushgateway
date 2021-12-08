@@ -1,6 +1,6 @@
-# katrix-pushgateway-v0
+# Pushgateway server for Chooj
 
-Push gateway for Katrix version 0.x written using Flask...
+Push gateway for Chooj. This is a prototype and the actual version should be written in Rust.
 
 ## Requirements
 ```
